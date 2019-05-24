@@ -4,7 +4,6 @@ class Form extends Component {
 
   constructor(props) {
     super(props);
-    console.log(this.props);
     this.state = {
       region: null,
       country: null
@@ -12,9 +11,6 @@ class Form extends Component {
     this.handleRegionChange = this.handleRegionChange.bind(this);
     this.getCountryOptions = this.getCountryOptions.bind(this);
     this.handleCountryChange = this.handleCountryChange.bind(this);
-  //   this.getCategoryOptions = this.getCategoryOptions.bind(this);
-  //   this.getFullOptions = this.getFullOptions.bind(this);
-  //   this.mapFilteredOptions = this.mapFilteredOptions.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -28,29 +24,28 @@ class Form extends Component {
   }
 
   getCountryOptions() {
-    // get all countries in that region
     const options = this.props.countries.filter(country => {
       return country.region === this.state.region;
     });
-    return options.map(option => {
-      return <option key={option.key}>{option.name}</option>;
+    return options.map(country => {
+      return <option key={country.id} id={country.id}>{country.name}</option>;
     })
   }
-
 
   createRegionOptions() {
     const regionOptions = this.props.countries.map(country => {
       return country.region;
     })
     const filteredOptions = Array.from(new Set(regionOptions));
-    return filteredOptions.map((option, index) => {
+    const sortedOptions = filteredOptions.sort();
+    return sortedOptions.map((option, index) => {
       return <option key={index}>{option}</option>
     })
   }
 
   handleSubmit(evt) {
     evt.preventDefault();
-    // dispatch this.state.country
+    this.props.addToList(this.state.country);
   };
 
 
@@ -73,12 +68,11 @@ class Form extends Component {
               onChange={this.handleCountryChange}
             >
               {this.getCountryOptions()}
-              // get all countries in that region
             </select>
             <input
               type='submit'
-              className='ui button'
-              value='View films'
+              className='submit-button'
+              value='Add to bucket list'
             />
           </form>
         </div>

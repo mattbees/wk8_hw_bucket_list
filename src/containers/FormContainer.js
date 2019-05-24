@@ -4,17 +4,28 @@ import Form from '../components/Form';
 const mapStateToProps = (state) => {
   const countries = state.map(country => {
     return {
-      name: country.countryName,
-      key: country.key,
+      name: country.name,
+      id: country.key,
       flag: country.flag,
       region: country.region
     }
   })
-  console.log(countries);
   return {
     countries
   };
 }
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addToList: (country) => {
+      dispatch({
+        type: 'ADD_TO_LIST',
+        name: country
+      })
+    }
+  };
+};
+
 
 // const mapDispatchToProps = (dispatch) =>({
 //   getImage(breed){
@@ -35,7 +46,7 @@ const mapStateToProps = (state) => {
 //       })
 //     })
 //   }
-//
 // })
 
-export default connect(mapStateToProps)(Form);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Form);

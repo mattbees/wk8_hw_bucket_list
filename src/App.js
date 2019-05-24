@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import FormContainer from './containers/FormContainer.js';
-// import BucketListContainer from './components/BucketListContainer.js';
+import BucketListContainer from './containers/BucketListContainer.js';
 import { connect } from 'react-redux';
 
 class App extends Component {
@@ -14,7 +14,7 @@ class App extends Component {
       <>
         <h1>Bucket List</h1>
         <FormContainer />
-        {/*// <BucketListContainer />*/}
+        <BucketListContainer />
       </>
     )
   }
@@ -24,11 +24,11 @@ class App extends Component {
 const extractData = (countries) => {
   return countries.map(country => {
     return {
-      countryName: country.name,
+      name: country.name,
       region: country.region,
       nativeName: country.nativeName,
       flag: country.flag,
-      key: country.alpha3Code
+      id: country.alpha3Code
     }
   })
 }
