@@ -10,6 +10,17 @@ const countriesReducer = (state = [], action) => {
           return country;
         }
       });
+    case 'TOGGLE_VISITED':
+      console.log('TOGGLE_VISITED');
+      console.log(action);
+      return state.map(country => {
+        if (country.id === action.countryId) {
+          console.log(country);
+          return { ...country, visited: !country.visited }
+        } else {
+          return country;
+        }
+      });
     default:
       return state;
   }

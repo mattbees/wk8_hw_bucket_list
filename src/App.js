@@ -28,7 +28,11 @@ const extractData = (countries) => {
       region: country.region,
       nativeName: country.nativeName,
       flag: country.flag,
-      id: country.alpha3Code
+      id: country.alpha3Code,
+      selected: false,
+      imageUrl: null,
+      targetDate: null,
+      visited: false
     }
   })
 }

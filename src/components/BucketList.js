@@ -4,12 +4,11 @@ import BucketListItem from './BucketListItem';
 
 const BucketList = (props) => {
 
-  console.log(props); // object.selectedCountries[element]
-
   const countryCards = props.selectedCountries.map(country => {
     return <BucketListItem
       country={ country }
       key={ country.id }
+      toggleVisited={ props.toggleVisited }
     />
   });
 

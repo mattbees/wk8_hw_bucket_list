@@ -10,4 +10,15 @@ const mapStateToProps = (state) => {
   }
 };
 
-export default connect(mapStateToProps)(BucketList);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    toggleVisited: (countryId) => {
+      dispatch({
+        type: 'TOGGLE_VISITED',
+        countryId
+      })
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(BucketList);
