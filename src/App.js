@@ -1,26 +1,53 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
+import FormContainer from './containers/FormContainer.js';
+// import BucketListContainer from './components/BucketListContainer.js';
+import { connect } from 'react-redux';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+
+  componentDidMount() {
+    this.props.getCountriesData();
+  }
+
+  render() {
+    return (
+      <>
+        <h1>Bucket List</h1>
+        <FormContainer />
+        {/*// <BucketListContainer />*/}
+      </>
+    )
+  }
+
 }
 
-export default App;
+const extractData = (countries) => {
+  return countries.map(country => {
+    return {
+      countryName: country.name,
+      region: country.region,
+      nativeName: country.nativeName,
+      flag: country.flag,
+      key: country.alpha3Code
+    }
+  })
+}
+
+const mapDispatchToProps = (dispatch) => ({
+  getCountriesData() {
+    dispatch(() => {
+      fetch('https://restcountries.eu/rest/v2/all')
+      .then(res => res.json())
+      .then(countriesData => {
+        const data = extractData(countriesData);
+        dispatch({
+          type: 'ADD_COUNTRIES',
+          data
+        })
+      })
+    })
+  }
+})
+
+
+export default connect(null, mapDispatchToProps)(App);
