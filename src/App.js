@@ -37,6 +37,18 @@ const extractData = (countries) => {
   })
 }
 
+const checkRegion = (countries) => {
+  const checkedCountries = countries.map(country => {
+    if (country.region === '') {
+      country.region = 'Other';
+      return country;
+    } else {
+      return country;
+    }
+  })
+  return checkedCountries;
+}
+
 const mapDispatchToProps = (dispatch) => ({
   getCountriesData() {
     dispatch(() => {
@@ -44,9 +56,10 @@ const mapDispatchToProps = (dispatch) => ({
       .then(res => res.json())
       .then(countriesData => {
         const data = extractData(countriesData);
+        const checkedData = checkRegion(data);
         dispatch({
           type: 'ADD_COUNTRIES',
-          data
+          data: checkedData
         })
       })
     })

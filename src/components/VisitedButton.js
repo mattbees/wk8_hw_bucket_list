@@ -11,14 +11,14 @@ const VisitedButton = (props) => {
     return (
       <div className='visited-button'>
         <p>You've been there!</p>
-        <button onClick={ handleVisitedClick }>Not visited</button>
+        <button onClick={ handleVisitedClick }>Mark as not visited</button>
       </div>
     );
   } else {
     return (
       <div className='visited-button'>
-        <p>Still on the bucket list</p>
-        <button onClick={ handleVisitedClick }>Visited</button>
+        <p>Still on your bucket list</p>
+        <button onClick={ handleVisitedClick }>Tick this off your list</button>
       </div>
     );
   }

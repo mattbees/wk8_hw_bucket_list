@@ -1,11 +1,12 @@
 const countriesReducer = (state = [], action) => {
   switch (action.type) {
     case 'ADD_COUNTRIES':
+      console.log(action.data);
       return action.data
     case 'ADD_TO_LIST':
       return state.map(country => {
         if (country.name === action.name) {
-          return { ...country, selected: true }
+          return { ...country, selected: !country.selected }
         } else {
           return country;
         }
