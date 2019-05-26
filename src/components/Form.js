@@ -5,24 +5,35 @@ class Form extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      region: null,
-      country: null
+      // Initial values needed to ensure view is equal to state.
+      region: 'Africa',
+      country: 'Algeria',
+      buttonValue: 'Add this country to your bucket list'
     }
     this.handleRegionChange = this.handleRegionChange.bind(this);
     this.getCountryOptions = this.getCountryOptions.bind(this);
     this.handleCountryChange = this.handleCountryChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.selectButtonValue = this.selectButtonValue.bind(this);
   }
 
+
+  // using callback to setState because componentDidUpdate infinite loop
   handleRegionChange(evt) {
-    this.setState({ region: evt.target.value });
+    this.setState({ region: evt.target.value }, () => {
+      const countryOptions = this.props.countries.filter(country => {
+        return country.region === this.state.region;
+      });
+      this.setState({ country: countryOptions[0].name });
+    });
   };
 
-
+  // Sets local state:
   handleCountryChange(evt) {
     this.setState({ country: evt.target.value });
   }
 
+  // Presentational logic:
   getCountryOptions() {
     const options = this.props.countries.filter(country => {
       return country.region === this.state.region;
@@ -32,6 +43,7 @@ class Form extends Component {
     })
   }
 
+  // Presentational logic:
   createRegionOptions() {
     const regionOptions = this.props.countries.map(country => {
       return country.region;
@@ -43,11 +55,27 @@ class Form extends Component {
     })
   }
 
+  // async to allow re-rendering of button - not working. How do I get selectButtonValue() to wait until the store has been updated before running?
   handleSubmit(evt) {
     evt.preventDefault();
     this.props.addToList(this.state.country);
+    this.selectButtonValue();
   };
 
+  // componentDidUpdate(prevProps, prevState) {
+  //   if (prevState.country !== this.state.country)
+  // }
+
+  // Presentational logic:
+  selectButtonValue() {
+    const thisCountry = this.props.countries.find(country => {
+      return country.name === this.state.country;
+    })
+    console.log(thisCountry); // logging as 'selected: false' because async
+    return thisCountry.selected ?
+    this.setState({ buttonValue: 'Remove from your list' })
+    : this.setState({ buttonValue: 'Add this country to your bucket list' });
+  }
 
   render() {
     return(
@@ -58,21 +86,22 @@ class Form extends Component {
             onSubmit={this.handleSubmit}
           >
             <select
-              className='form-dropdown'
+              className='ui dropdown'
               onChange={this.handleRegionChange}
             >
               {this.createRegionOptions()}
             </select>
             <select
-              className='form-dropdown'
+              id='country-dropdown'
+              className='ui dropdown'
               onChange={this.handleCountryChange}
             >
               {this.getCountryOptions()}
             </select>
             <input
               type='submit'
-              className='submit-button'
-              value='Add to bucket list'
+              className='ui positive basic button'
+              value={this.state.buttonValue}
             />
           </form>
         </div>

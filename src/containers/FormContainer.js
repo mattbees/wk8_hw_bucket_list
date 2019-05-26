@@ -2,14 +2,17 @@ import { connect } from 'react-redux';
 import Form from '../components/Form';
 
 const mapStateToProps = (state) => {
+  console.log(state);
   const countries = state.map(country => {
     return {
       name: country.name,
-      id: country.key,
+      id: country.id,
       flag: country.flag,
-      region: country.region
+      region: country.region,
+      selected: false
     }
   })
+  console.log(countries);
   return {
     countries
   };
@@ -19,7 +22,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     addToList: (country) => {
       dispatch({
-        type: 'ADD_TO_LIST',
+        type: 'TOGGLE_LISTING',
         name: country
       })
     }
@@ -28,7 +31,7 @@ const mapDispatchToProps = (dispatch) => {
 
 
 // const mapDispatchToProps = (dispatch) =>({
-//   getImage(breed){
+//   getImage(country){
 //     dispatch(()=>{
 //       fetch(`https://dog.ceo/api/breed/${breed}/images/random`)
 //       .then(res =>res.json())

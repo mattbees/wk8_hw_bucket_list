@@ -7,12 +7,16 @@ const BucketListItem = (props) => {
   const {name, nativeName, flag} = props.country;
 
   return (
-    <div className='bucket-list-item'>
+    <div className='ui card'>
       <h4>{ name } ({ nativeName })</h4>
-      <img src={ flag } alt={`${ name } flag`} />
+      <div className='image'>
+        <img src={ flag } alt={`${ name } flag`} />
+      </div>
       <VisitedButton
         toggleVisited={ props.toggleVisited }
+        toggleListing={ props.toggleListing }
         id={ props.country.id }
+        name={ props.country.name }
         visited={ props.country.visited }
       />
     </div>

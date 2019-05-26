@@ -17,6 +17,12 @@ const mapDispatchToProps = (dispatch) => {
         type: 'TOGGLE_VISITED',
         countryId
       })
+    },
+    toggleListing: (countryName) => {
+      dispatch({
+        type: 'TOGGLE_LISTING',
+        name: countryName
+      })
     }
   };
 };

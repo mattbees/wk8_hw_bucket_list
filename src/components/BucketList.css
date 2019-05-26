@@ -1,0 +1,15 @@
+#bucket-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.ui.card {
+  margin: 1em;
+}
+.ui.card:first-child {
+  margin: 1em;
+}
+.ui.card:last-child {
+  margin: 1em;
+}

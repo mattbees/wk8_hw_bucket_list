@@ -1,6 +1,6 @@
 import React from 'react';
 import BucketListItem from './BucketListItem';
-// import './PhotosList.css';
+import './BucketList.css';
 
 const BucketList = (props) => {
 
@@ -9,6 +9,7 @@ const BucketList = (props) => {
       country={ country }
       key={ country.id }
       toggleVisited={ props.toggleVisited }
+      toggleListing={ props.toggleListing }
     />
   });
 

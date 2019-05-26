@@ -3,7 +3,7 @@ const countriesReducer = (state = [], action) => {
     case 'ADD_COUNTRIES':
       console.log(action.data);
       return action.data
-    case 'ADD_TO_LIST':
+    case 'TOGGLE_LISTING':
       return state.map(country => {
         if (country.name === action.name) {
           return { ...country, selected: !country.selected }
