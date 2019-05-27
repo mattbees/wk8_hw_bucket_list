@@ -9,7 +9,7 @@ const mapStateToProps = (state) => {
       id: country.id,
       flag: country.flag,
       region: country.region,
-      selected: false
+      selected: country.selected
     }
   })
   console.log(countries);

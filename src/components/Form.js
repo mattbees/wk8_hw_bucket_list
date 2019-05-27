@@ -8,7 +8,7 @@ class Form extends Component {
       // Initial values needed to ensure view is equal to state.
       region: 'Africa',
       country: 'Algeria',
-      buttonValue: 'Add this country to your bucket list'
+      // buttonValue: 'Add this country to your bucket list'
     }
     this.handleRegionChange = this.handleRegionChange.bind(this);
     this.getCountryOptions = this.getCountryOptions.bind(this);
@@ -19,6 +19,7 @@ class Form extends Component {
 
 
   // using callback to setState because componentDidUpdate infinite loop
+  // can I use componentWillReceiveProps here??
   handleRegionChange(evt) {
     this.setState({ region: evt.target.value }, () => {
       const countryOptions = this.props.countries.filter(country => {
@@ -55,26 +56,24 @@ class Form extends Component {
     })
   }
 
-  // async to allow re-rendering of button - not working. How do I get selectButtonValue() to wait until the store has been updated before running?
   handleSubmit(evt) {
     evt.preventDefault();
     this.props.addToList(this.state.country);
     this.selectButtonValue();
   };
 
-  // componentDidUpdate(prevProps, prevState) {
-  //   if (prevState.country !== this.state.country)
-  // }
-
   // Presentational logic:
-  selectButtonValue() {
-    const thisCountry = this.props.countries.find(country => {
-      return country.name === this.state.country;
-    })
-    console.log(thisCountry); // logging as 'selected: false' because async
-    return thisCountry.selected ?
-    this.setState({ buttonValue: 'Remove from your list' })
-    : this.setState({ buttonValue: 'Add this country to your bucket list' });
+  selectButtonValue(event) {
+    if (this.props.countries.length > 0 ) {
+      const thisCountry = this.props.countries.find(country => {
+        return country.name === this.state.country;
+      })
+      return thisCountry.selected ?
+      'Remove country from list' : 'Add country to list';
+    } else {
+      return 'Loading'
+    }
+
   }
 
   render() {
@@ -101,14 +100,13 @@ class Form extends Component {
             <input
               type='submit'
               className='ui positive basic button'
-              value={this.state.buttonValue}
+              value={this.selectButtonValue()}
             />
           </form>
         </div>
       </>
     )
   }
-
 };
 
 export default Form;
